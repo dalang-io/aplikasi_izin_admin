@@ -1,0 +1,15 @@
+services:
+  guru-app:
+    container_name: guru-app
+    image: akademik:latest
+    network_mode: "host"
+    environment:
+      DEBUG: ${DEBUG}
+      SECRET_KEY: ${SECRET_KEY}
+      ALLOWED_HOST: ${ALLOWED_HOST}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
+      POCKETBASE_SECRET_KEY: ${SECRET_KEY}
+      POCKETBASE_URL: ${POCKETBASE_URL}
+    ports:
+      - "8081:8000"
+    
