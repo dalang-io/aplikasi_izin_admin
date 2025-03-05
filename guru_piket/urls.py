@@ -19,5 +19,5 @@ from django.urls import path
 from guru import views
 
 urlpatterns = [
-    path('guru-piket/', views.izin_guru_view, name='izin_guru'),
+    path('', views.izin_guru_view, name='izin_guru'),
 ]
