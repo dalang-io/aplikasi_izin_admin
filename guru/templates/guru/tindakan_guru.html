@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tindakan Izin Murid</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/guru.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Tindakan Izin Murid</h1>
+        </header>
+
+        <div class="islamic-decoration">
+            "Berikanlah ilmu kepada anak-anakmu agar mereka menjadi mulia" - Hadits
+        </div>
+
+        <main>
+            <h3>Tindakan untuk Izin {{ izin.nama }}</h3>
+
+            <form method="POST" action="{% url 'proses_tindakan' izin.id %}" onsubmit="return validateForm()">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Pilih Tindakan:</label>
+                    <select name="tindakan" id="tindakanSelect" required>
+                        <option value="">Pilih Tindakan</option>
+                        <option value="setuju">Setuju</option>
+                        <option value="tolak">Tolak</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="alasan">Alasan (Wajib):</label>
+                    <textarea id="alasan" name="alasan" rows="4" placeholder="Masukkan alasan tindakan" required></textarea>
+                </div>
+                <button type="submit" class="button">Simpan Tindakan</button>
+            </form>
+
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+        </main>
+
+        <footer>
+            <p>© 2025 Sistem Izin Sekolah Islam. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        function validateForm() {
+            const tindakan = document.getElementById('tindakanSelect').value;
+            const alasan = document.getElementById('alasan').value.trim();
+
+            if (tindakan === '') {
+                alert('Pilih tindakan terlebih dahulu.');
+                return false;
+            }
+
+            if (!alasan) {
+                alert('Alasan wajib diisi.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

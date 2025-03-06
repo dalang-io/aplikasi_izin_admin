@@ -9,7 +9,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <header class="header">
             <h1>Data Izin Murid - Guru Piket</h1>
         </header>
@@ -18,7 +17,6 @@
             "Berikanlah ilmu kepada anak-anakmu agar mereka menjadi mulia" - Hadits
         </div>
 
-        <!-- Main Content -->
         <main>
             <input type="text" id="searchInput" class="search-input" placeholder="Cari nama murid...">
 
@@ -32,6 +30,8 @@
                         <th>Alasan</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
+                        <th>Keputusan</th>
+                        <th>Alasan Keputusan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,9 +47,21 @@
                             {% if izin.jam %}
                                 {{ izin.jam|default:"-" }}
                             {% else %}
-                                -
+                                {{ izin.created }}
                             {% endif %}
                         </td>
+                        <td>
+                            {% if izin.tindakan %}
+                                {% if izin.tindakan == "setuju" %}
+                                    Izin
+                                {% else %}
+                                    Tolak
+                                {% endif %}
+                            {% else %}
+                                <a href="{% url 'tindakan_izin' izin.id %}" class="button small">Tindakan</a>
+                            {% endif %}
+                        </td>
+                        <td>{{ izin.alasan|default:"-" }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -60,7 +72,6 @@
             {% endif %}
         </main>
 
-        <!-- Footer -->
         <footer>
             <p>© 2025 Sistem Izin Sekolah Islam. All rights reserved.</p>
         </footer>
@@ -68,24 +79,20 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Fungsi untuk menambahkan interaktivitas pada tabel
             const table = document.getElementById("izinTable");
             if (table) {
-                // Tambahkan efek hover pada baris tabel
                 const rows = table.getElementsByTagName("tr");
-                for (let i = 1; i < rows.length; i++) { // Mulai dari 1 untuk melewati header
+                for (let i = 1; i < rows.length; i++) {
                     rows[i].addEventListener("mouseover", function() {
-                        this.style.backgroundColor = "rgba(241, 196, 15, 0.2)"; // Warna kuning muda transparan
+                        this.style.backgroundColor = "rgba(241, 196, 15, 0.2)";
                     });
                     rows[i].addEventListener("mouseout", function() {
-                        this.style.backgroundColor = ""; // Kembali ke default
+                        this.style.backgroundColor = "";
                     });
                 }
             }
 
-            // Fungsi pencarian sederhana
             const searchInput = document.getElementById("searchInput");
-
             searchInput.addEventListener("input", function() {
                 const searchTerm = this.value.toLowerCase();
                 const rows = table.getElementsByTagName("tr");

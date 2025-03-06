@@ -1,3 +1,4 @@
+# guru_piket/urls.py
 """
 URL configuration for guru_piket project.
 
@@ -15,9 +16,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from guru import views
+from django.urls import path, include
 
 urlpatterns = [
-    path('guru-piket/', views.izin_guru_view, name='izin_guru'),
+    path('', include('guru.urls')),  
+    path('admin/', admin.site.urls), 
 ]
